@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Dataset Explorer — Pre-Modeling Data Inspection & Quality Analysis</title>
+  <meta name="description" content="An interactive exploratory data analysis tool to inspect dataset structure, column data types, missing values, duplicates, and AI/ML readiness before machine learning modeling.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#home">
+      <span class="brand-icon">&#9650;</span>
+      AI Dataset Explorer
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#dataset">Select Dataset</a>
+      <a href="#overview">Overview</a>
+      <a href="#columns">Columns</a>
+      <a href="#numerical">Numerical</a>
+      <a href="#categorical">Categorical</a>
+      <a href="#quality">Data Quality</a>
+      <a href="#readiness">AI Readiness</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO SECTION -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="hero-pill">Pre-Modeling Exploratory Data Analysis (EDA)</div>
+      <h1>AI Dataset Explorer</h1>
+      <p class="lead">Inspect dataset structure, column types, missing values, duplicates, and statistical summaries to evaluate AI/ML readiness before training models.</p>
+      
+      <div class="hero-actions">
+        <a class="button" href="#dataset">Choose a Dataset</a>
+        <a class="button secondary" href="#about">Learn How It Works</a>
+      </div>
+
+      <div class="three-col">
+        <div class="card">
+          <h3>Dataset Profiling</h3>
+          <p>Inspects dimensions, column types, non-null value counts, and uniqueness without altering original data.</p>
+        </div>
+        <div class="card">
+          <h3>Statistical Summaries</h3>
+          <p>Calculates minimum, maximum, mean, median, standard distributions, and top category frequencies.</p>
+        </div>
+        <div class="card">
+          <h3>AI Readiness Checks</h3>
+          <p>Identifies columns requiring encoding, imputation, scaling, or identifier removal before model fitting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATASET SELECTION -->
+  <section id="dataset" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>1. Select or Upload a Dataset</h2>
+        <p>Choose one of the curated sample datasets or drag and drop your own CSV file for instant in-browser inspection.</p>
+      </div>
+
+      <div id="sampleList" class="sample-grid" aria-label="Sample datasets"></div>
+
+      <div class="upload-card">
+        <div class="upload-info">
+          <h3>Upload Custom CSV File</h3>
+          <span class="hint">Supports comma-separated CSV files with column headers (up to 5 MB). Processed strictly in-browser.</span>
+        </div>
+        <div>
+          <label class="button secondary" for="fileInput">&#128194; Choose CSV File</label>
+          <input id="fileInput" type="file" accept=".csv,text/csv">
+        </div>
+      </div>
+
+      <div id="loadStatus" class="status-box" role="status" aria-live="polite">No dataset loaded yet. Select a sample above or upload a CSV file.</div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section id="overview" class="section alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>2. Dataset Overview</h2>
+        <p>High-level summary of dimensions, data composition, and missingness metrics.</p>
+      </div>
+      <div id="overviewContent"></div>
+    </div>
+  </section>
+
+  <!-- COLUMN EXPLORER -->
+  <section id="columns" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>3. Column Explorer</h2>
+        <p>Detailed per-attribute breakdown with data type verification, unique counts, and value previews.</p>
+      </div>
+      <div id="columnsContent"></div>
+    </div>
+  </section>
+
+  <!-- NUMERICAL ANALYSIS -->
+  <section id="numerical" class="section alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>4. Numerical Analysis</h2>
+        <p>Descriptive statistics for numeric and continuous variables.</p>
+      </div>
+      <div id="numericalContent"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORICAL ANALYSIS -->
+  <section id="categorical" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>5. Categorical Analysis</h2>
+        <p>Frequency distributions and cardinality analysis for discrete and text attributes.</p>
+      </div>
+      <div id="categoricalContent"></div>
+    </div>
+  </section>
+
+  <!-- DATA QUALITY -->
+  <section id="quality" class="section alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>6. Data Quality Checks</h2>
+        <p>Objective audit of data hygiene including missing values, duplicate records, and mixed data types.</p>
+      </div>
+      <div id="qualityContent"></div>
+    </div>
+  </section>
+
+  <!-- AI READINESS -->
+  <section id="readiness" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>7. AI / ML Readiness Observations</h2>
+        <p>Key observations and recommended preprocessing steps prior to model training.</p>
+      </div>
+      <div id="readinessContent"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT & ARCHITECTURE -->
+  <section id="about" class="section alt">
+    <div class="container">
+      <div class="section-header">
+        <h2>About &amp; Architecture</h2>
+        <p>Understand the design philosophy, analysis rules, and dual-implementation architecture.</p>
+      </div>
+
+      <div class="card">
+        <h3>Dual-Implementation Architecture</h3>
+        <pre class="diagram" aria-label="System Architecture Diagram">
+                 Input CSV Dataset
+                         |
+        +----------------+----------------+
+        |                                 |
+   Base R Pipeline               Web Application
+   (R/main.R, R/functions.R)     (web/script.js, Vanilla JS)
+        |                                 |
+   CLI / Terminal Report          Browser Interactive Dashboard
+        |                                 |
+        +----------------+----------------+
+                         |
+            Consistent Pre-ML Insights</pre>
+        <p>Both implementations share identical parsing rules, type inference logic, and statistical definitions. The Base R pipeline runs locally via R/RStudio with zero external dependencies, while the web application runs entirely client-side in the browser.</p>
+      </div>
+
+      <div class="card">
+        <h3>Inspection Rules &amp; Standards</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rule / Metric</th>
+                <th>Standard Applied</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>Missing Values</th><td>Empty strings, NA, N/A, NaN, NULL, null (case-insensitive, whitespace-trimmed).</td></tr>
+              <tr><th>Numerical Type</th><td>Every non-missing value parses as a valid numeric literal (integers, floats, scientific notation).</td></tr>
+              <tr><th>Date Type</th><td>Values conforming to ISO-8601 calendar format (YYYY-MM-DD).</td></tr>
+              <tr><th>Categorical Type</th><td>Text columns and discrete non-numeric categories.</td></tr>
+              <tr><th>Duplicate Rows</th><td>Exact match across every column with a previously observed row.</td></tr>
+              <tr><th>High Cardinality</th><td>Categorical attributes containing greater than 10 unique values.</td></tr>
+              <tr><th>Mixed Type</th><td>Text columns where 80% or more non-missing values resemble numbers.</td></tr>
+              <tr><th>Frequency Top-N</th><td>Top 5 most frequent categories; ties sorted alphabetically.</td></tr>
+              <tr><th>Precision</th><td>Calculations and percentage metrics rounded to 2 decimal places.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Principles</h3>
+        <ul>
+          <li><strong>Non-Destructive:</strong> Strictly read-only analysis; no rows or columns are altered or dropped automatically.</li>
+          <li><strong>Objective:</strong> Reports empirical counts and observations without subjective or arbitrary scoring.</li>
+          <li><strong>Privacy-First:</strong> All uploaded files in the web interface are processed locally inside the browser.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>AI Dataset Explorer &mdash; Exploratory Data Analysis &amp; Pre-Modeling Inspection Tool.</p>
+  </div>
+</footer>
+
+<script src="script.js?v=2"></script>
+</body>
+</html>
