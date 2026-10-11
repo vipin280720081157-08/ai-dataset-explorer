@@ -3,7 +3,6 @@
 [![R](https://img.shields.io/badge/R-4.0%2B-276DC3?logo=r&logoColor=white)](https://www.r-project.org/)
 [![Base R](https://img.shields.io/badge/Dependencies-Base%20R-blue)](#)
 [![JavaScript](https://img.shields.io/badge/Frontend-Vanilla%20JS-F7DF1E?logo=javascript&logoColor=black)](#)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](#)
 
 A lightweight, non-destructive Exploratory Data Analysis (EDA) and data quality inspection tool built with **Base R** and an interactive, zero-dependency **HTML/CSS/JS** web interface.
 
